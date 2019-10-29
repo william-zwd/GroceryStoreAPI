@@ -8,15 +8,19 @@ namespace GroceryStoreAPI.Tests
 {
     public class OrdersControllerTests
     {
+        private OrdersController _ordersController;
+
+        public OrdersControllerTests()
+        {
+            _ordersController = new OrdersController(new Repository.Repository());
+        }
+
         // list all orders
         [Fact]
         public void Get_All()
         {
-            // arrange
-            var controller = new OrdersController(new Repository.Repository());
-
             // act
-            var result = controller.Get();
+            var result = _ordersController.Get();
 
             // asset
             result.Count().Should().Be(1);
@@ -26,11 +30,8 @@ namespace GroceryStoreAPI.Tests
         [Fact]
         public void Get_Specific()
         {
-            // arrange
-            var controller = new OrdersController(new Repository.Repository());
-
             // act
-            var result = controller.Get(1);
+            var result = _ordersController.Get(1);
 
             // asset
             result.ID.Should().Be(1);
@@ -40,11 +41,8 @@ namespace GroceryStoreAPI.Tests
         [Fact]
         public void Get_By_Date()
         {
-            // arrange
-            var controller = new OrdersController(new Repository.Repository());
-
             // act
-            var result = controller.GetByDate(DateTime.Now);
+            var result = _ordersController.GetByDate(DateTime.Now);
 
             // asset
             result.Count().Should().Be(1);
@@ -54,15 +52,11 @@ namespace GroceryStoreAPI.Tests
         [Fact]
         public void Get_By_Customer()
         {
-            // arrange
-            var controller = new OrdersController(new Repository.Repository());
-
             // act
-            var result = controller.GetByCustomerID(1);
+            var result = _ordersController.GetByCustomerID(1);
 
             // asset
             result.Count().Should().Be(1);
         }
-
     }
 }

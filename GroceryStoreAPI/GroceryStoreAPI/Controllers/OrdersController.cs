@@ -32,13 +32,15 @@ namespace GroceryStoreAPI.Controllers
             return _repository.GetOrder(id);
         }
 
-        [HttpGet("{date}")]
+        [Route("[action]/{date}")]
+        [HttpGet]
         public IEnumerable<Order> GetByDate(DateTime date)
         {
             return _repository.GetOrders(date);
         }
 
-        [HttpGet("{customerID}")]
+        [Route("[action]/{customerID}")]
+        [HttpGet]
         public IEnumerable<Order> GetByCustomerID(int customerID)
         {
             return _repository.GetCustomerOrders(customerID);
