@@ -8,19 +8,15 @@ namespace GroceryStoreAPI.Tests
 {
     public class ProductsControllerTests
     {
-        private ProductsController _productsController;
-
-        public ProductsControllerTests()
-        {
-            _productsController = new ProductsController(new Repository.Repository());
-        }
-
         // list all products
         [Fact]
         public void Get_All()
         {
+            // arrange
+            var controller = new ProductsController(new Repository.Repository());
+
             // act
-            var result = _productsController.Get();
+            var result = controller.Get();
 
             // asset
             result.Count().Should().Be(3);
@@ -30,11 +26,27 @@ namespace GroceryStoreAPI.Tests
         [Fact]
         public void Get_Specific()
         {
+            // arrange
+            var controller = new ProductsController(new Repository.Repository());
+
             // act
-            var result = _productsController.Get(1);
+            var result = controller.Get(1);
 
             // asset
             result.ID.Should().Be(1);
+        }
+
+        [Fact]
+        public void Get_OutOfRange_ReturnNull()
+        {
+            // arrange
+            var controller = new ProductsController(new Repository.Repository());
+
+            // act
+            var result = controller.Get(10);
+
+            // asset
+            result.Should().Be(null);
         }
 
         // add a product
@@ -42,6 +54,7 @@ namespace GroceryStoreAPI.Tests
         public void Add()
         {
             // arrange
+            var controller = new ProductsController(new Repository.Repository());
             var newProduct = new Product()
             {
                 Description = "Pear",
@@ -49,9 +62,9 @@ namespace GroceryStoreAPI.Tests
             };
 
             // act
-            _productsController.Post(newProduct);
+            controller.Post(newProduct);
 
-            var result = _productsController.Get();
+            var result = controller.Get();
 
             // asset
             result.Count().Should().Be(4);

@@ -8,19 +8,15 @@ namespace GroceryStoreAPI.Tests
 {
     public class CustomersControllerTests
     {
-        private CustomersController _customersController;
-
-        public CustomersControllerTests()
-        {
-            _customersController = new CustomersController(new Repository.Repository());
-        }
-
         // list all customer
         [Fact]
         public void Get_All()
         {
+            // arrange
+            var controller = new CustomersController(new Repository.Repository());
+
             // act
-            var result = _customersController.Get();
+            var result = controller.Get();
 
             // asset
             result.Count().Should().Be(3);
@@ -30,11 +26,27 @@ namespace GroceryStoreAPI.Tests
         [Fact]
         public void Get_Specific()
         {
+            // arrange
+            var controller = new CustomersController(new Repository.Repository());
+
             // act
-            var result = _customersController.Get(1);
+            var result = controller.Get(1);
 
             // asset
             result.ID.Should().Be(1);
+        }
+
+        [Fact]
+        public void Get_OutOfRange_ReturnNull()
+        {
+            // arrange
+            var controller = new CustomersController(new Repository.Repository());
+
+            // act
+            var result = controller.Get(10);
+
+            // asset
+            result.Should().Be(null);
         }
 
         // add a customer
@@ -42,15 +54,16 @@ namespace GroceryStoreAPI.Tests
         public void Add()
         {
             // arrange
+            var controller = new CustomersController(new Repository.Repository());
             var newCustomer = new Customer()
             {
                 Name = "Abraham"
             };
 
             // act
-            _customersController.Post(newCustomer);
+            controller.Post(newCustomer);
 
-            var result = _customersController.Get();
+            var result = controller.Get();
 
             // asset
             result.Count().Should().Be(4);

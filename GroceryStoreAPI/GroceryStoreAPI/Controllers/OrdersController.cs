@@ -34,9 +34,18 @@ namespace GroceryStoreAPI.Controllers
 
         [Route("[action]/{date}")]
         [HttpGet]
-        public IEnumerable<Order> GetByDate(DateTime date)
+        public IEnumerable<Order> GetByDate(string dtStr)
         {
-            return _repository.GetOrders(date);
+            try
+            {
+                var dt = DateTime.Parse(dtStr);
+                return _repository.GetOrders(dt);
+            }
+            catch(Exception)
+            {
+            }
+
+            return null;
         }
 
         [Route("[action]/{customerID}")]
